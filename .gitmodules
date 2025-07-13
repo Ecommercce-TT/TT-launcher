@@ -4,3 +4,6 @@
 [submodule "producto-ms"]
 	path = producto-ms
 	url = https://github.com/Ecommercce-TT/producto-ms.git
+[submodule "usuario-ms"]
+	path = usuario-ms
+	url = https://github.com/Ecommercce-TT/usuario-ms.git
