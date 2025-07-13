@@ -1,3 +1,6 @@
 [submodule "api-gateway"]
 	path = api-gateway
 	url = https://github.com/Ecommercce-TT/api-gateway.git
+[submodule "producto-ms"]
+	path = producto-ms
+	url = https://github.com/Ecommercce-TT/producto-ms.git
