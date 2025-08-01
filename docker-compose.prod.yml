@@ -1,0 +1,127 @@
+# version: '3'
+
+services:
+
+#=====================================
+# NATS
+#====================================
+  nats-server:
+    image: nats:latest
+
+
+#=====================================
+# BACKEND
+#=====================================
+
+  auth-ms:
+    build: 
+      context: ./auth-microservice
+      dockerfile: dockerfile.prod
+    image: jhairagila/auth-ms
+    environment:
+      - PORT=3004
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${AUTH_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+
+  client-gateway:
+    build: 
+      context: ./client-gateway
+      dockerfile: dockerfile.prod
+    image: jhairagila/client-gateway 
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - NATS_SERVERS=nats://nats-server:4222
+
+
+  notifications-ms:
+    build: 
+      context: ./notifications-microservice
+      dockerfile: dockerfile.prod
+      args:
+        - NOTIFICATIONS_DB_URL_NEON=${NOTIFICATIONS_DB_URL_NEON}
+    image: jhairagila/notifications-ms
+    environment:
+      - PORT=3002
+      - DATABASE_URL=${NOTIFICATIONS_DB_URL_NEON}
+      - NATS_SERVERS=nats://nats-server:4222
+
+
+  orders-ms:
+    build: 
+      context: ./orders-microservice
+      dockerfile: dockerfile.prod
+      args:
+        - ORDERS_DB_URL_NEON=${ORDERS_DB_URL_NEON}
+    image: jhairagila/orders-ms
+    environment:
+      - PORT=3002
+      - DATABASE_URL=${ORDERS_DB_URL_NEON}
+      - NATS_SERVERS=nats://nats-server:4222
+
+  payment-ms:
+    build: 
+      context: ./payments-microservice
+      dockerfile: dockerfile.prod
+    image: jhairagila/payment-ms
+    ports:
+      - ${PAYMENT_MS_PORT}:${PAYMENT_MS_PORT}
+    environment:
+      - PORT=${PAYMENT_MS_PORT}
+      - STRIPE_SECRET=${STRIPE_SECRET}
+      - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL}
+      - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
+      - NATS_SERVERS=nats://nats-server:4222
+
+  products-ms:
+    build: 
+      context: ./productss-microservice
+      dockerfile: dockerfile.prod
+      args:
+        - PRODUCTS_DB_URL_NEON=${PRODUCTS_DB_URL_NEON}
+    # image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
+    image: jhairagila/products-ms
+    environment:
+      - PORT=3002
+      - DATABASE_URL=${PRODUCTS_DB_URL_NEON}
+      - NATS_SERVERS=nats://nats-server:4222
+
+  stores-ms:
+    build: 
+      context: ./stores-microservice
+      dockerfile: dockerfile.prod
+      args:
+        - STORES_DB_URL_NEON=${STORES_DB_URL_NEON}
+    image: jhairagila/stores-ms
+    environment:
+      - PORT=3002
+      - DATABASE_URL=${STORES_DB_URL_NEON}
+      - NATS_SERVERS=nats://nats-server:4222
+
+#=====================================
+# FRONT-END
+#=====================================
+
+  # front-end:
+  #   build: 
+  #    context: ./front-end/app
+  #    dockerfile: dockerfile
+  #    args:
+  #       - BACKEND_URL_TO_FRONT_END=${BACKEND_URL_TO_FRONT_END}
+  #   image: front-end-prod
+  #   volumes:
+  #     - ./front-end/app/src:/usr/src/app/src
+  #   ports:
+  #     - 4000:4000
+  #   command: npm run dev
+  #   environment:
+  #     - PORT=4000
+  #     - BACKEND_URL=${BACKEND_URL_TO_FRONT_END}
+  
+  
+  
+
+  
