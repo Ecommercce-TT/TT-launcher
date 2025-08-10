@@ -1,2 +1,4 @@
 postgres/
 .env
+postgres_tienda/
+postgres_producto/

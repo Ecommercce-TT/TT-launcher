@@ -47,7 +47,7 @@ services:
   #   image: postgres:16.2
   #   restart: always
   #   volumes:
-  #     - ./postgres:/var/lib/postgresql/data
+  #     - ./postgres_producto:/var/lib/postgresql/data
   #   ports:
   #     - "5432:5432"
   #   environment:
@@ -84,7 +84,7 @@ services:
   #   image: postgres:16.2
   #   restart: always
   #   volumes:
-  #     - ./postgres:/var/lib/postgresql/data
+  #     - ./postgres_tienda:/var/lib/postgresql/data
   #   ports:
   #     - "5431:5432"
   #   environment:
