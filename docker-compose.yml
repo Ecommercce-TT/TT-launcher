@@ -13,103 +13,103 @@ services:
 #======================================================
 # API GATEWAY
 #=======================================================
-  # api-gateway:
-  #   build: ./api-gateway
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - ./api-gateway/src:/usr/src/app/src
-  #   command: npm run start:dev
-  #   environment:
-  #     - PORT=3000
-  #     - NATS_SERVERS=nats://nats-server:4222
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api-gateway/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3000
+      - NATS_SERVERS=nats://nats-server:4222
 
 #======================================================
 # PRODUCTO MICROSERVICE
 #=======================================================
-  # producto-ms:
-  #   container_name: producto_microservicio
-  #   build: ./producto-ms
-  #   volumes:
-  #     - ./producto-ms:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   command: sh ./init.sh
-  #   environment:
-  #     - PORT=3010
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=${PRODUCTS_DATABASE_URL}
-  #   depends_on:
-  #     producto-bd:
-  #       condition: service_healthy 
+  producto-ms:
+    container_name: producto_microservicio
+    build: ./producto-ms
+    volumes:
+      - ./producto-ms:/usr/src/app
+      - /usr/src/app/node_modules
+    command: sh ./init.sh
+    environment:
+      - PORT=3010
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${PRODUCTS_DATABASE_URL}
+    depends_on:
+      producto-bd:
+        condition: service_healthy 
 
-  # producto-bd:
-  #   container_name: producto_basedatos
-  #   image: postgres:16.2
-  #   restart: always
-  #   volumes:
-  #     - ./postgres_producto:/var/lib/postgresql/data
-  #   ports:
-  #     - "5432:5432"
-  #   environment:
-  #     POSTGRES_USER: jhair
-  #     POSTGRES_PASSWORD: ketchup1234
-  #     POSTGRES_DB: producto_bd
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U jhair -d producto_bd"]  # For producto-bd
-  #     interval: 5s
-  #     timeout: 15s
-  #     retries: 10
+  producto-bd:
+    container_name: producto_basedatos
+    image: postgres:16.2
+    restart: always
+    volumes:
+      - ./postgres_producto:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: jhair
+      POSTGRES_PASSWORD: ketchup1234
+      POSTGRES_DB: producto_bd
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jhair -d producto_bd"]  # For producto-bd
+      interval: 5s
+      timeout: 15s
+      retries: 10
 
 #======================================================
 # TIENDA MICROSERVICE
 #=======================================================
-  # tienda-ms:
-  #   container_name: tienda_microservicio
-  #   build: ./tienda-ms
-  #   volumes:
-  #     # - ./tienda-ms/src:/usr/src/app/src
-  #     - ./tienda-ms:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   command: sh ./init.sh
-  #   environment:
-  #     - PORT=3011
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=${TIENDA_DATABASE_URL}
-  #   depends_on:
-  #     tienda-bd:
-  #       condition: service_healthy
+  tienda-ms:
+    container_name: tienda_microservicio
+    build: ./tienda-ms
+    volumes:
+      # - ./tienda-ms/src:/usr/src/app/src
+      - ./tienda-ms:/usr/src/app
+      - /usr/src/app/node_modules
+    command: sh ./init.sh
+    environment:
+      - PORT=3011
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${TIENDA_DATABASE_URL}
+    depends_on:
+      tienda-bd:
+        condition: service_healthy
 
-  # tienda-bd:
-  #   container_name: tienda_basedatos
-  #   image: postgres:16.2
-  #   restart: always
-  #   volumes:
-  #     - ./postgres_tienda:/var/lib/postgresql/data
-  #   ports:
-  #     - "5431:5432"
-  #   environment:
-  #     POSTGRES_USER: jhair
-  #     POSTGRES_PASSWORD: ketchup1234
-  #     POSTGRES_DB: tienda_bd
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U jhair -d tienda_bd"]   # For tienda-bd
-  #     interval: 5s
-  #     timeout: 15s
-  #     retries: 10
+  tienda-bd:
+    container_name: tienda_basedatos
+    image: postgres:16.2
+    restart: always
+    volumes:
+      - ./postgres_tienda:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: jhair
+      POSTGRES_PASSWORD: ketchup1234
+      POSTGRES_DB: tienda_bd
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jhair -d tienda_bd"]   # For tienda-bd
+      interval: 5s
+      timeout: 15s
+      retries: 10
   
 #======================================================
 # USUARIO MICROSERVICE
 #=======================================================
-  # usuario-ms:
-  #   build: ./usuario-ms
-  #   volumes:
-  #     # - ./usuario-ms/src:/usr/src/app/src
-  #     - ./usuario-ms:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   command: sh ./init.sh
-  #   environment:
-  #     - PORT=3004
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=${AUTH_DATABASE_URL}
-  #     - JWT_SECRET=${JWT_SECRET}
+  usuario-ms:
+    build: ./usuario-ms
+    volumes:
+      # - ./usuario-ms/src:/usr/src/app/src
+      - ./usuario-ms:/usr/src/app
+      - /usr/src/app/node_modules
+    command: sh ./init.sh
+    environment:
+      - PORT=3004
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${AUTH_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
 
