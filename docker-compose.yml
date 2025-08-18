@@ -23,6 +23,7 @@ services:
     environment:
       - PORT=3000
       - NATS_SERVERS=nats://nats-server:4222
+      - CHOKIDAR_USEPOLLING=true
 
 #======================================================
 # PRODUCTO MICROSERVICE
@@ -31,13 +32,14 @@ services:
     container_name: producto_microservicio
     build: ./producto-ms
     volumes:
-      - ./producto-ms:/usr/src/app
-      - /usr/src/app/node_modules
-    command: sh ./init.sh
+      - ./producto-ms/src:/usr/src/app/src
+    command: npm run start:dev
     environment:
       - PORT=3010
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${PRODUCTS_DATABASE_URL}
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=500
     depends_on:
       producto-bd:
         condition: service_healthy 
@@ -67,14 +69,14 @@ services:
     container_name: tienda_microservicio
     build: ./tienda-ms
     volumes:
-      # - ./tienda-ms/src:/usr/src/app/src
-      - ./tienda-ms:/usr/src/app
-      - /usr/src/app/node_modules
-    command: sh ./init.sh
+      - ./tienda-ms/src:/usr/src/app/src
+    command: npm run start:dev
     environment:
       - PORT=3011
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${TIENDA_DATABASE_URL}
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=500
     depends_on:
       tienda-bd:
         condition: service_healthy
@@ -104,12 +106,13 @@ services:
     build: ./usuario-ms
     volumes:
       # - ./usuario-ms/src:/usr/src/app/src
-      - ./usuario-ms:/usr/src/app
-      - /usr/src/app/node_modules
-    command: sh ./init.sh
+      - ./usuario-ms/src:/usr/src/app/src
+    # command: sh ./init.sh
+    command: npm run start:dev
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${AUTH_DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
-
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=500

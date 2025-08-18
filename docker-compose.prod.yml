@@ -16,8 +16,9 @@ services:
   auth-ms:
     build: 
       context: ./usuario-ms
-      dockerfile: dockerfile.prod
-    image: jhairagila/auth-ms
+      dockerfile: Dockerfile.prod
+    image: auth-ms
+    # image: jhairagila/auth-ms
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
@@ -27,8 +28,9 @@ services:
   api-gateway: 
     build: 
       context: ./api-gateway
-      dockerfile: dockerfile.prod
-    image: jhairagila/client-gateway 
+      dockerfile: Dockerfile.prod
+    image: api-gateway
+    # image: jhairagila/client-gateway 
     ports:
       - 3000:3000
     environment:
@@ -38,26 +40,27 @@ services:
   producto-ms:
     build: 
       context: ./producto-ms
-      dockerfile: dockerfile.prod
+      dockerfile: Dockerfile.prod
       args:
-        - PRODUCTS_DB_URL_NEON=${PRODUCTS_DB_URL_NEON}
-    # image: us-west1-docker.pkg.dev/tienda-ms-452101/image-registry/products-ms
-    image: jhairagila/products-ms
+        - PRODUCTO_DATABASE_URL_PROD=${PRODUCTO_DATABASE_URL_PROD}
+    image: productos-ms
+    # image: jhairagila/products-ms
     environment:
-      - PORT=3002
-      - DATABASE_URL=${PRODUCTS_DB_URL_NEON}
+      - PORT=3010
       - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${PRODUCTO_DATABASE_URL_PROD}
 
-  stores-ms:
+  tienda-ms:
     build: 
-      context: ./stores-microservice
-      dockerfile: dockerfile.prod
+      context: ./tienda-ms
+      dockerfile: Dockerfile.prod
       args:
-        - STORES_DB_URL_NEON=${STORES_DB_URL_NEON}
-    image: jhairagila/stores-ms
+        - TIENDA_DATABASE_URL_PROD=${TIENDA_DATABASE_URL_PROD}
+    # image: jhairagila/stores-ms
+    image: tienda-ms
     environment:
       - PORT=3002
-      - DATABASE_URL=${STORES_DB_URL_NEON}
+      - DATABASE_URL=${TIENDA_DATABASE_URL_PROD}
       - NATS_SERVERS=nats://nats-server:4222
   
   
