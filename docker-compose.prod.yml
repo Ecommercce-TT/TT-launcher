@@ -17,8 +17,8 @@ services:
     build: 
       context: ./usuario-ms
       dockerfile: Dockerfile.prod
-    image: auth-ms
-    # image: jhairagila/auth-ms
+    # image: auth-ms
+    image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/usuario-ms
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
@@ -29,8 +29,8 @@ services:
     build: 
       context: ./api-gateway
       dockerfile: Dockerfile.prod
-    image: api-gateway
-    # image: jhairagila/client-gateway 
+    # image: api-gateway
+    image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/client-gateway 
     ports:
       - 3000:3000
     environment:
@@ -43,8 +43,8 @@ services:
       dockerfile: Dockerfile.prod
       args:
         - PRODUCTO_DATABASE_URL_PROD=${PRODUCTO_DATABASE_URL_PROD}
-    image: productos-ms
-    # image: jhairagila/products-ms
+    # image: productos-ms
+    image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/producto-ms
     environment:
       - PORT=3010
       - NATS_SERVERS=nats://nats-server:4222
@@ -57,7 +57,8 @@ services:
       args:
         - TIENDA_DATABASE_URL_PROD=${TIENDA_DATABASE_URL_PROD}
     # image: jhairagila/stores-ms
-    image: tienda-ms
+    # image: tienda-ms
+    image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/tienda-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${TIENDA_DATABASE_URL_PROD}
