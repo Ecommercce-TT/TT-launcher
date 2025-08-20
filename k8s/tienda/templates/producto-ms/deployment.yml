@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: producto-ms
+  name: producto-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: producto-ms
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: producto-ms
+    spec:
+      containers:
+      - image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/producto-ms
+        name: producto-ms
+        env:
+        - name: PORT 
+          value: "3010"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: producto-secrets
+              key: database_url
+        - name: NATS_SERVERS
+          value: "nats://nats"
+        resources: {}
+status: {}

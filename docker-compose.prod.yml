@@ -13,7 +13,7 @@ services:
 # BACKEND
 #=====================================
 
-  auth-ms:
+  usuario-ms:
     build: 
       context: ./usuario-ms
       dockerfile: Dockerfile.prod
@@ -30,7 +30,7 @@ services:
       context: ./api-gateway
       dockerfile: Dockerfile.prod
     # image: api-gateway
-    image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/client-gateway 
+    image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/api-gateway
     ports:
       - 3000:3000
     environment:
