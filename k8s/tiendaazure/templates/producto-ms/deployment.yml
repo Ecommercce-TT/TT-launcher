@@ -14,12 +14,15 @@ spec:
       labels:
         app: producto-ms
     spec:
+      nodeName: aks-agentpool-42411947-vmss000001
+      # Permite que el usuario 'node' (UID 1000) tenga acceso de escritura al volumen
       securityContext:
-        fsGroup: 1000 
-      nodeName: gke-cluster-1-default-pool-ff078bba-mzxj
+        fsGroup: 1000
       containers:
         - name: producto-ms
-          image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/producto-ms
+          image: tiendaimagesunl.azurecr.io/producto-ms
+          ports:
+            - containerPort: 3010
           env:
             - name: PORT
               value: "3010"
@@ -30,6 +33,7 @@ spec:
                   key: database_url
             - name: NATS_SERVERS
               value: "nats://nats"
+          # Montamos el volumen persistente dentro del contenedor
           resources:
             requests:
               memory: "300Mi"
@@ -40,7 +44,8 @@ spec:
           volumeMounts:
             - name: producto-storage
               mountPath: /usr/src/app/uploads
+      # Declaramos el volumen que usará el contenedor
       volumes:
         - name: producto-storage
           persistentVolumeClaim:
-            claimName: hyperdisk-pvc-custom
+            claimName: producto-pvc-premium

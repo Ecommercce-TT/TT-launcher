@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hyperdisk-gcp-custom
+provisioner: pd.csi.storage.gke.io
+parameters:
+  type: hyperdisk-balanced   
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+

@@ -1,0 +1,11 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: api-backend-config
+spec:
+  timeoutSec: 500           # Aumenta de 30s a 60s
+  connectionDraining:
+    drainingTimeoutSec: 30
+  healthCheck:
+    requestPath: /   # Usa un endpoint rápido
+    port: 3000

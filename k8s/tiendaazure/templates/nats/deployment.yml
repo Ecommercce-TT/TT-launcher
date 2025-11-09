@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: nats
   name: nats
@@ -10,22 +9,21 @@ spec:
   selector:
     matchLabels:
       app: nats
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: nats
     spec:
-      nodeName: gke-cluster-1-default-pool-ff078bba-j635
+      nodeName: aks-agentpool-42411947-vmss000000
       containers:
-      - image: nats
-        name: nats
+      - name: nats
+        image: nats
         resources:
           requests:
             memory: "300Mi"
             cpu: "50m"
           limits:
             memory: "500Mi"
-            cpu: "80m"     
+            cpu: "80m"
 status: {}
+  

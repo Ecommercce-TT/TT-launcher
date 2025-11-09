@@ -3,39 +3,34 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: usuario-ms
-  name: usuario-ms
+    app: tienda-ms
+  name: tienda-ms
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: usuario-ms
+      app: tienda-ms
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: usuario-ms
+        app: tienda-ms
     spec:
-      nodeName: gke-cluster-1-default-pool-ff078bba-mzxj
+      nodeName: aks-agentpool-42411947-vmss000001
       containers:
-      - image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/usuario-ms
-        name: usuario-ms
+      - image: tiendaimagesunl.azurecr.io/tienda-ms
+        name: tienda-ms
         env:
-        - name: PORT
-          value: "3004"
-        - name: NATS_SERVERS
-          value: "nats://nats"
+        - name: PORT 
+          value: "3010"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: usuario-secrets
+              name: tienda-secrets
               key: database_url
-        - name: JWT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: usuario-secrets
-              key: jwt_secret
+        - name: NATS_SERVERS
+          value: "nats://nats"
         resources:
           requests:
             memory: "300Mi"

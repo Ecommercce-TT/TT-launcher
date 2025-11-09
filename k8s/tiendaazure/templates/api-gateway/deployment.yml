@@ -3,29 +3,34 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: nats
-  name: nats
+    app: api-gateway
+  name: api-gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nats
+      app: api-gateway
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: nats
+        app: api-gateway
     spec:
-      nodeName: gke-cluster-1-default-pool-ff078bba-j635
+      nodeName: aks-agentpool-42411947-vmss000000
       containers:
-      - image: nats
-        name: nats
+      - image: tiendaimagesunl.azurecr.io/api-gateway
+        name: api-gateway
+        env:
+        - name: PORT
+          value: "3000"
+        - name: NATS_SERVERS
+          value: "nats://nats"
         resources:
           requests:
             memory: "300Mi"
             cpu: "50m"
           limits:
             memory: "500Mi"
-            cpu: "80m"     
+            cpu: "80m"
 status: {}

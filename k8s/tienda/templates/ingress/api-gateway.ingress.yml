@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tienda-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    networking.gke.io/redirect-http-to-https: "true"
+spec:
+  ingressClassName: gce
+  tls:
+    - hosts:
+        - google.tesisunlloja.site
+      secretName: tienda-cert-tls
+  rules:
+    - host: google.tesisunlloja.site
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 3000

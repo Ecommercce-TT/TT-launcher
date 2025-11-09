@@ -17,8 +17,9 @@ spec:
       labels:
         app: tienda-ms
     spec:
+      nodeName: gke-cluster-1-default-pool-ff078bba-mzxj
       containers:
-      - image: southamerica-east1-docker.pkg.dev/feisty-reality-469523-e6/registro/tienda-ms
+      - image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/tienda-ms
         name: tienda-ms
         env:
         - name: PORT 
@@ -30,6 +31,11 @@ spec:
               key: database_url
         - name: NATS_SERVERS
           value: "nats://nats"
-        
-        resources: {}
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "50m"
+          limits:
+            memory: "500Mi"
+            cpu: "80m"
 status: {}

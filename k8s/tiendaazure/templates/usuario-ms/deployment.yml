@@ -17,9 +17,12 @@ spec:
       labels:
         app: usuario-ms
     spec:
-      nodeName: gke-cluster-1-default-pool-ff078bba-mzxj
+      nodeName: aks-agentpool-42411947-vmss000001
+      serviceAccountName: default       # <--- esto asegura que use tu ServiceAccount
+      imagePullSecrets:
+        - name: azure-key3
       containers:
-      - image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/usuario-ms
+      - image: tiendaimagesunl.azurecr.io/usuario-ms
         name: usuario-ms
         env:
         - name: PORT

@@ -1,0 +1,78 @@
+# version: '3'
+
+services:
+
+#=====================================
+# NATS
+#====================================
+  nats-server:
+    image: nats:latest
+
+
+#=====================================
+# BACKEND
+#=====================================
+
+  usuario-ms:
+    build: 
+      context: ./usuario-ms
+      dockerfile: Dockerfile.prod
+      platforms:
+        - linux/amd64
+    # image: auth-ms
+    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/usuario-ms
+    environment:
+      - PORT=3004
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${AUTH_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+
+  api-gateway: 
+    build: 
+      context: ./api-gateway
+      dockerfile: Dockerfile.prod
+      platforms:
+        - linux/amd64
+    # image: api-gateway
+    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/api-gateway
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - NATS_SERVERS=nats://nats-server:4222
+
+  producto-ms:
+    build: 
+      context: ./producto-ms
+      dockerfile: Dockerfile.prod
+      platforms:
+        - linux/amd64
+      args:
+        - PRODUCTO_DATABASE_URL_PROD=${PRODUCTO_DATABASE_URL_PROD}
+    # image: productos-ms
+    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/producto-ms
+    environment:
+      - PORT=3010
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${PRODUCTO_DATABASE_URL_PROD}
+
+  tienda-ms:
+    build: 
+      context: ./tienda-ms
+      dockerfile: Dockerfile.prod
+      platforms:
+        - linux/amd64
+      args:
+        - TIENDA_DATABASE_URL_PROD=${TIENDA_DATABASE_URL_PROD}
+    # image: jhairagila/stores-ms
+    # image: tienda-ms
+    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/tienda-ms
+    environment:
+      - PORT=3002
+      - DATABASE_URL=${TIENDA_DATABASE_URL_PROD}
+      - NATS_SERVERS=nats://nats-server:4222
+  
+  
+  
+
+  
