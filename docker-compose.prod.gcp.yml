@@ -20,7 +20,7 @@ services:
       platforms:
         - linux/amd64
     # image: auth-ms
-    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/usuario-ms
+    image: us-central1-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/usuario-ms
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
@@ -34,7 +34,7 @@ services:
       platforms:
         - linux/amd64
     # image: api-gateway
-    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/api-gateway
+    image: us-central1-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/api-gateway
     ports:
       - 3000:3000
     environment:
@@ -50,7 +50,7 @@ services:
       args:
         - PRODUCTO_DATABASE_URL_PROD=${PRODUCTO_DATABASE_URL_PROD}
     # image: productos-ms
-    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/producto-ms
+    image: us-central1-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/producto-ms
     environment:
       - PORT=3010
       - NATS_SERVERS=nats://nats-server:4222
@@ -66,7 +66,7 @@ services:
         - TIENDA_DATABASE_URL_PROD=${TIENDA_DATABASE_URL_PROD}
     # image: jhairagila/stores-ms
     # image: tienda-ms
-    image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/tienda-ms
+    image: us-central1-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/tienda-ms
     environment:
       - PORT=3002
       - DATABASE_URL=${TIENDA_DATABASE_URL_PROD}

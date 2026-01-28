@@ -16,10 +16,10 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000 
-      nodeName: gke-cluster-1-default-pool-ff078bba-mzxj
+      nodeName: gke-cluster-1-default-pool-424600d3-s79d
       containers:
         - name: producto-ms
-          image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/producto-ms
+          image: us-central1-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/producto-ms
           env:
             - name: PORT
               value: "3010"

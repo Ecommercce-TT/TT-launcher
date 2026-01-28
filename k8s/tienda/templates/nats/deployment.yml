@@ -17,7 +17,7 @@ spec:
       labels:
         app: nats
     spec:
-      nodeName: gke-cluster-1-default-pool-ff078bba-j635
+      nodeName: gke-cluster-1-default-pool-424600d3-10rk
       containers:
       - image: nats
         name: nats

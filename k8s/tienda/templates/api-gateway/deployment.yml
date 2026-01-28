@@ -17,9 +17,9 @@ spec:
       labels:
         app: api-gateway
     spec:
-      nodeName: gke-cluster-1-default-pool-ff078bba-j635
+      nodeName: gke-cluster-1-default-pool-424600d3-10rk
       containers:
-      - image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/api-gateway
+      - image: us-central1-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/api-gateway
         name: api-gateway
         env:
         - name: PORT

@@ -14,7 +14,7 @@ spec:
       labels:
         app: nats
     spec:
-      nodeName: aks-agentpool-42411947-vmss000000
+      nodeName: aks-agentpool-37946828-vmss000000
       containers:
       - name: nats
         image: nats

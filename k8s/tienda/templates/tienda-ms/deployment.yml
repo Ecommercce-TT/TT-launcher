@@ -17,9 +17,9 @@ spec:
       labels:
         app: tienda-ms
     spec:
-      nodeName: gke-cluster-1-default-pool-ff078bba-mzxj
+      nodeName: gke-cluster-1-default-pool-424600d3-s79d
       containers:
-      - image: europe-west3-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/tienda-ms
+      - image: us-central1-docker.pkg.dev/tt-eccomerce-tesis/tiendaimagenes/tienda-ms
         name: tienda-ms
         env:
         - name: PORT 

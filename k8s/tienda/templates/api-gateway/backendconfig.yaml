@@ -3,7 +3,7 @@ kind: BackendConfig
 metadata:
   name: api-backend-config
 spec:
-  timeoutSec: 500           # Aumenta de 30s a 60s
+  timeoutSec: 200           # Aumenta de 30s a 60s
   connectionDraining:
     drainingTimeoutSec: 30
   healthCheck:

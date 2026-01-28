@@ -17,7 +17,7 @@ spec:
       labels:
         app: tienda-ms
     spec:
-      nodeName: aks-agentpool-42411947-vmss000001
+      nodeName: aks-agentpool-37946828-vmss000001
       containers:
       - image: tiendaimagesunl.azurecr.io/tienda-ms
         name: tienda-ms
